@@ -44,9 +44,9 @@ const PLANS_DATA: PlanInfo[] = [
     category: 'Most Popular Features',
     price: {
       monthly: 2100,
-      yearly: 1680,
+      yearly: 1000,
       monthlyOriginal: 4200,
-      yearlyOriginal: 3360
+      yearlyOriginal: 2100
     },
     features: [
       'Creation upto 5 invitations',
@@ -68,9 +68,9 @@ const PLANS_DATA: PlanInfo[] = [
     category: 'Recommended',
     price: {
       monthly: 3100,
-      yearly: 2480,
+      yearly: 1500,
       monthlyOriginal: 6200,
-      yearlyOriginal: 4960
+      yearlyOriginal: 3100
     },
     features: [
       'Guest Name Invitation',
@@ -93,9 +93,9 @@ const PLANS_DATA: PlanInfo[] = [
     category: 'Premium Experience',
     price: {
       monthly: 5100,
-      yearly: 4080,
+      yearly: 3500,
       monthlyOriginal: 10200,
-      yearlyOriginal: 8160
+      yearlyOriginal: 5100
     },
     features: [
       'Custom Domain',
@@ -207,17 +207,10 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Pricing Switcher */}
-                  <div className="space-y-6 pt-6 border-t border-gray-100">
-                    <div className="flex flex-col gap-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-brand-muted">
-                        Select Billing Period
-                      </span>
-                      <BillingToggle cycle={billingCycle} onChange={setBillingCycle} />
-                    </div>
-
+                  {/* Pricing Switcher Removed, leaving Support Info with Divider */}
+                  <div className="pt-6 border-t border-gray-100">
                     {/* Support Card Row */}
-                    <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                    <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-full bg-brand-primary text-white flex items-center justify-center">
                           <Headset className="w-4 h-4 text-brand-champagne" />
@@ -245,6 +238,14 @@ export default function App() {
         <section className="bg-brand-surface py-20">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             
+            {/* Centered Billing Toggle */}
+            <div className="flex flex-col items-center mb-12">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-muted mb-3">
+                Select Billing Period
+              </span>
+              <BillingToggle cycle={billingCycle} onChange={setBillingCycle} />
+            </div>
+
             {/* Grid Layout of 4 Plans */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {PLANS_DATA.map((plan) => (
