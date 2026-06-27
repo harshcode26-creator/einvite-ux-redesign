@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
-import { Menu, X, LogIn, Sparkles, User, ShieldCheck } from 'lucide-react';
+import { Menu, X, LogIn, Sparkles } from 'lucide-react';
 
 interface NavbarProps {
   onStartFree: () => void;
 }
+
+const NAV_ITEMS = [
+  { label: 'Home', href: '#' },
+  { label: 'Create', href: '#' },
+  { label: 'About', href: '#' },
+  { label: 'Contact', href: '#' },
+  { label: 'Pricing', href: '#comparison-table', active: true },
+  { label: 'Articles', href: '#' },
+  { label: 'Feedback', href: '#' }
+];
 
 export default function Navbar({ onStartFree }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,36 +34,56 @@ export default function Navbar({ onStartFree }: NavbarProps) {
 
   return (
     <>
-      <nav id="navbar-shell" className="bg-brand-surface/90 backdrop-blur-md border-b border-gray-200/50 fixed w-full top-0 z-40 transition-all duration-300 h-20">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 h-full flex justify-between items-center">
-          <div className="flex items-center gap-12">
+      <nav id="navbar-shell" className="bg-white border-b border-gray-100 fixed w-full top-0 z-40 transition-all duration-300 h-16 md:h-20 shadow-none">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 h-full flex items-center justify-between relative">
+          
+          {/* Logo Aligned Left */}
+          <div className="flex items-center">
             <a 
               id="nav-logo" 
               href="#" 
-              className="font-serif text-3xl font-medium tracking-tight text-brand-primary hover:opacity-85 transition-opacity"
+              className="font-script text-[36px] md:text-[40px] font-normal text-brand-primary hover:opacity-85 transition-opacity leading-none select-none pt-1"
             >
               EInvite
             </a>
-            
-            {/* Desktop Nav */}
-            <div className="hidden md:flex gap-8">
-              <a href="#" className="text-brand-muted hover:text-brand-primary font-sans font-medium text-[15px] tracking-wide transition-colors">
-                Home
+          </div>
+          
+          {/* Navigation Centered */}
+          <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+            {NAV_ITEMS.map((item) => (
+              <a 
+                key={item.label}
+                href={item.href} 
+                className={item.active 
+                  ? "text-brand-primary font-bold border-b-2 border-brand-primary pb-1 font-sans text-[14px] tracking-wide transition-colors"
+                  : "text-brand-muted hover:text-brand-primary font-sans font-medium text-[14px] tracking-wide transition-colors"
+                }
+              >
+                {item.label}
               </a>
-              <a href="#" className="text-brand-muted hover:text-brand-primary font-sans font-medium text-[15px] tracking-wide transition-colors">
-                Features
-              </a>
-              <a href="#comparison-table" className="text-brand-primary font-bold border-b-2 border-brand-primary pb-1 font-sans text-[15px] tracking-wide transition-colors">
-                Pricing
-              </a>
-              <a href="#" className="text-brand-muted hover:text-brand-primary font-sans font-medium text-[15px] tracking-wide transition-colors">
-                About
-              </a>
-            </div>
+            ))}
           </div>
 
-          <div className="flex items-center gap-4">
-            {isLoggedIn ? (
+          {/* Authentication & controls Aligned Right */}
+          <div className="flex items-center gap-3">
+            {!isLoggedIn ? (
+              <div className="hidden sm:flex items-center gap-3">
+                <button 
+                  id="nav-login-btn"
+                  onClick={() => setShowLoginModal(true)}
+                  className="px-5 py-2 text-brand-primary border border-brand-primary/20 hover:border-brand-primary rounded-full font-sans font-medium text-[14px] transition-all cursor-pointer hover:bg-brand-surface"
+                >
+                  Log in
+                </button>
+                <button 
+                  id="nav-signup-btn"
+                  onClick={onStartFree}
+                  className="px-5 py-2 bg-brand-primary text-white border border-transparent rounded-full font-sans font-medium text-[14px] transition-all cursor-pointer hover:bg-brand-primary/90"
+                >
+                  Sign Up
+                </button>
+              </div>
+            ) : (
               <div className="flex items-center gap-3 bg-brand-warm py-1.5 px-4 rounded-full border border-brand-gold/20">
                 <div className="w-6 h-6 rounded-full bg-brand-primary text-white flex items-center justify-center text-xs font-semibold">
                   {userName.charAt(0).toUpperCase()}
@@ -66,28 +96,12 @@ export default function Navbar({ onStartFree }: NavbarProps) {
                   Log out
                 </button>
               </div>
-            ) : (
-              <button 
-                id="nav-login-btn"
-                onClick={() => setShowLoginModal(true)}
-                className="px-5 py-2 text-brand-muted hover:text-brand-primary font-sans font-semibold text-[15px] transition-colors cursor-pointer"
-              >
-                Log In
-              </button>
             )}
-            
-            <button 
-              id="nav-start-free-btn"
-              onClick={onStartFree}
-              className="px-6 py-2.5 bg-brand-primary text-white rounded-xl font-sans font-semibold text-[15px] hover:bg-brand-primary/90 transition-all duration-200 luxury-shadow-l1 active:scale-95 cursor-pointer"
-            >
-              Start Free
-            </button>
 
             {/* Mobile menu button */}
             <button 
               onClick={() => setIsOpen(!isOpen)} 
-              className="md:hidden p-2 text-brand-primary"
+              className="md:hidden p-2 text-brand-primary hover:bg-brand-surface rounded-full transition-colors"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -96,19 +110,37 @@ export default function Navbar({ onStartFree }: NavbarProps) {
 
         {/* Mobile Nav */}
         {isOpen && (
-          <div className="md:hidden absolute top-20 left-0 w-full bg-brand-surface border-b border-gray-200/50 shadow-lg px-6 py-6 flex flex-col gap-4 z-40">
-            <a href="#" onClick={() => setIsOpen(false)} className="text-brand-muted hover:text-brand-primary font-sans font-medium py-2">
-              Home
-            </a>
-            <a href="#" onClick={() => setIsOpen(false)} className="text-brand-muted hover:text-brand-primary font-sans font-medium py-2">
-              Features
-            </a>
-            <a href="#comparison-table" onClick={() => setIsOpen(false)} className="text-brand-primary font-bold py-2">
-              Pricing
-            </a>
-            <a href="#" onClick={() => setIsOpen(false)} className="text-brand-muted hover:text-brand-primary font-sans font-medium py-2">
-              About
-            </a>
+          <div className="md:hidden absolute top-16 left-0 w-full bg-white border-b border-gray-100 shadow-lg px-6 py-6 flex flex-col gap-4 z-40">
+            {NAV_ITEMS.map((item) => (
+              <a 
+                key={item.label}
+                href={item.href} 
+                onClick={() => setIsOpen(false)} 
+                className={item.active 
+                  ? "text-brand-primary font-bold py-2 border-l-2 border-brand-primary pl-3 font-sans text-[15px]"
+                  : "text-brand-muted hover:text-brand-primary py-2 pl-3 font-sans text-[15px]"
+                }
+              >
+                {item.label}
+              </a>
+            ))}
+            
+            {!isLoggedIn && (
+              <div className="flex flex-col gap-2 pt-4 border-t border-gray-100">
+                <button 
+                  onClick={() => { setIsOpen(false); setShowLoginModal(true); }}
+                  className="w-full py-2.5 text-center text-brand-primary border border-brand-primary/20 rounded-full font-sans font-medium text-[14px]"
+                >
+                  Log in
+                </button>
+                <button 
+                  onClick={() => { setIsOpen(false); onStartFree(); }}
+                  className="w-full py-2.5 text-center bg-brand-primary text-white rounded-full font-sans font-medium text-[14px]"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
           </div>
         )}
       </nav>
