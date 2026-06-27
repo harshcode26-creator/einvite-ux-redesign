@@ -35,28 +35,28 @@ export default function Navbar({ onStartFree }: NavbarProps) {
   return (
     <>
       <nav id="navbar-shell" className="bg-white border-b border-gray-100 fixed w-full top-0 z-40 transition-all duration-300 h-16 md:h-20 shadow-none">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 h-full flex items-center justify-between relative">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 h-full flex items-center justify-between md:grid md:grid-cols-[150px_1fr_150px] lg:grid-cols-[220px_1fr_220px]">
           
           {/* Logo Aligned Left */}
-          <div className="flex items-center">
+          <div className="flex items-center justify-start">
             <a 
               id="nav-logo" 
               href="#" 
-              className="font-script text-[36px] md:text-[40px] font-normal text-brand-primary hover:opacity-85 transition-opacity leading-none select-none pt-1"
+              className="font-script text-[36px] md:text-[30px] lg:text-[40px] font-normal text-brand-primary hover:opacity-85 transition-opacity leading-none select-none pt-1"
             >
               EInvite
             </a>
           </div>
           
           {/* Navigation Centered */}
-          <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+          <div className="hidden md:flex items-center justify-center gap-3 lg:gap-8">
             {NAV_ITEMS.map((item) => (
               <a 
                 key={item.label}
                 href={item.href} 
                 className={item.active 
-                  ? "text-brand-primary font-bold border-b-2 border-brand-primary pb-1 font-sans text-[14px] tracking-wide transition-colors"
-                  : "text-brand-muted hover:text-brand-primary font-sans font-medium text-[14px] tracking-wide transition-colors"
+                  ? "text-brand-primary font-bold border-b-2 border-brand-primary pb-1 font-sans text-[13px] lg:text-[14px] tracking-wide transition-colors whitespace-nowrap"
+                  : "text-brand-muted hover:text-brand-primary font-sans font-medium text-[13px] lg:text-[14px] tracking-wide transition-colors whitespace-nowrap"
                 }
               >
                 {item.label}
@@ -65,33 +65,33 @@ export default function Navbar({ onStartFree }: NavbarProps) {
           </div>
 
           {/* Authentication & controls Aligned Right */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-end gap-2 md:gap-3">
             {!isLoggedIn ? (
-              <div className="hidden sm:flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2 lg:gap-3">
                 <button 
                   id="nav-login-btn"
                   onClick={() => setShowLoginModal(true)}
-                  className="px-5 py-2 text-brand-primary border border-brand-primary/20 hover:border-brand-primary rounded-full font-sans font-medium text-[14px] transition-all cursor-pointer hover:bg-brand-surface"
+                  className="px-3.5 lg:px-5 py-1.5 lg:py-2 text-brand-primary border border-brand-primary/20 hover:border-brand-primary rounded-full font-sans font-medium text-[13px] lg:text-[14px] transition-all cursor-pointer hover:bg-brand-surface whitespace-nowrap"
                 >
                   Log in
                 </button>
                 <button 
                   id="nav-signup-btn"
                   onClick={onStartFree}
-                  className="px-5 py-2 bg-brand-primary text-white border border-transparent rounded-full font-sans font-medium text-[14px] transition-all cursor-pointer hover:bg-brand-primary/90"
+                  className="px-3.5 lg:px-5 py-1.5 lg:py-2 bg-brand-primary text-white border border-transparent rounded-full font-sans font-medium text-[13px] lg:text-[14px] transition-all cursor-pointer hover:bg-brand-primary/90 whitespace-nowrap"
                 >
                   Sign Up
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-3 bg-brand-warm py-1.5 px-4 rounded-full border border-brand-gold/20">
-                <div className="w-6 h-6 rounded-full bg-brand-primary text-white flex items-center justify-center text-xs font-semibold">
+              <div className="flex items-center gap-2 lg:gap-3 bg-brand-warm py-1 lg:py-1.5 px-3 lg:px-4 rounded-full border border-brand-gold/20">
+                <div className="w-5.5 h-5.5 lg:w-6 lg:h-6 rounded-full bg-brand-primary text-white flex items-center justify-center text-[11px] lg:text-xs font-semibold">
                   {userName.charAt(0).toUpperCase()}
                 </div>
-                <span className="text-sm font-medium text-brand-primary hidden sm:inline capitalize">Hi, {userName}</span>
+                <span className="text-xs lg:text-sm font-medium text-brand-primary hidden sm:inline capitalize">Hi, {userName}</span>
                 <button 
                   onClick={() => setIsLoggedIn(false)} 
-                  className="text-xs text-brand-muted hover:text-brand-primary underline ml-2 cursor-pointer"
+                  className="text-[10px] lg:text-xs text-brand-muted hover:text-brand-primary underline ml-1.5 lg:ml-2 cursor-pointer"
                 >
                   Log out
                 </button>
